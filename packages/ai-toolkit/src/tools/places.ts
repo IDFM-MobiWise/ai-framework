@@ -26,6 +26,8 @@ async function callPlacesAPI(params: {
   searchParams.append('q', params.query);
   searchParams.append('disable_geojson', "true");
 
+  console.log("callIDFMAPI for journeyPlannerTool", params)
+
   const response = await fetch(
     `https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/places?${searchParams.toString()}`,
     {
@@ -52,6 +54,7 @@ async function callPlacesAPI(params: {
 export const placesSearchTool = tool(
   async (input) => {
     try {
+
       const data = await callPlacesAPI({
         query: input.query,
       });

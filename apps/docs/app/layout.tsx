@@ -1,7 +1,6 @@
 import "@repo/ui/globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import {llm} from "@repo/ai-toolkit/registry/registry";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 

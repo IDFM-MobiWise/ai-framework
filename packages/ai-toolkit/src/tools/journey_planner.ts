@@ -1,8 +1,6 @@
 import {tool} from "@langchain/core/tools";
 import {z} from "zod";
-
 import * as process from "node:process";
-import {placesSearchTool} from "../graphs/rag/places";
 
 interface JourneyResponse {
   journeys: Array<{
@@ -20,9 +18,15 @@ async function callIDFMAPI(fields: {
   toLat: string;
   datetime: string;
 }): Promise<JourneyResponse> {
+  console.log("callIDFMAPI for journeyPlannerTool", fields)
   const baseURL = "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/journeys";
-  const destination = `${fields.fromLong}%3B%20${fields.fromLat}&to=${fields.toLong}%3B%20${fields.toLat}&datetime=${fields.datetime}`;
-  const url = `${baseURL}?from=${destination}`;
+  const from = `${fields.fromLong};${fields.fromLat}`;
+  const to = `${fields.toLong};${fields.toLat}`;
+  const params = new URLSearchParams();
+  params.append('from', from);
+  params.append('to', to);
+  const url = `${baseURL}?${params.toString()}`;
+  console.log(url)
 
   const response = await fetch(url, {
     method: "GET",
@@ -42,7 +46,9 @@ async function callIDFMAPI(fields: {
     throw new Error(`Failed to fetch journey data.\nResponse: ${res}`);
   }
 
-  return await response.json();
+  const data = await response.json();
+
+  return data.journeys;
 }
 
 export const journeyPlannerTool = tool(
@@ -55,7 +61,6 @@ export const journeyPlannerTool = tool(
         toLat: input.toLat,
         datetime: input.datetime
       });
-      console.log(data);
       return JSON.stringify(data, null, 2);
     } catch (e: any) {
       console.warn("Error fetching journey data", e.message);
@@ -74,9 +79,3 @@ export const journeyPlannerTool = tool(
     })
   }
 );
-
-// Add to tools list
-export const ALL_TOOLS_LIST = [
-  journeyPlannerTool,
-  placesSearchTool
-];

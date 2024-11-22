@@ -1,5 +1,4 @@
 import {Button} from "@repo/ui/components/ui/button";
-import {vectorStore} from "@repo/ai-toolkit/rag/elastic";
 import {DirectoryLoader} from "langchain/document_loaders/fs/directory";
 import {DocxLoader} from "@langchain/community/document_loaders/fs/docx";
 import {RecursiveCharacterTextSplitter} from "langchain/text_splitter";

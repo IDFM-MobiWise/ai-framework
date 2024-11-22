@@ -79,6 +79,7 @@ const makeRetriever = async (config: LangGraphRunnableConfig) => {
   };
 };
 
+
 // Build the graph
 const builder = new StateGraph(ResearcherGraphAnnotation)
   .addNode("generateQueries", generateQueries)
