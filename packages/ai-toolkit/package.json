@@ -32,9 +32,11 @@
     "lint": "eslint ."
   },
   "exports": {
-    "./registry/*": "./src/registry/*.ts",
-    "./graphs/*": "./src/graphs/*.ts",
-    "./tools/*": "./src/tools/*.ts",
-    "./rag/*": "./src/rag/*.ts"
+    "./registry/*": "./src/registry/**/*.ts",
+    "./graphs": "./src/graphs/index.ts",
+    "./graphs/rag": "./src/graphs/rag/index.ts",
+    "./graphs/*": "./src/graphs/**/*.ts",
+    "./tools/*": "./src/tools/**/*.ts",
+    "./retriever/*": "./src/retriever/**/*.ts"
   }
 }

@@ -1,6 +1,6 @@
 import express from 'express';
-import {graphRag} from "@repo/ai-toolkit/graphs/index";
 import WebSocket from "ws";
+import {graphRag} from "@repo/ai-toolkit/graphs/rag";
 
 // Message type definitions
 interface BaseMessage {
@@ -92,10 +92,7 @@ const messageHandlers = {
   TOOL_UPDATE: (payload: ToolUpdate['payload'], ws: WebSocket) => {
     console.log(`Tool update received from ${payload.toolName}:`, payload.data);
 
-
-    graphRag.updateState(payload.toolName);
-
-    processRagStream(payload.data);
+    //do the update human in the loop
   },
 
   SYSTEM_MESSAGE: (payload: SystemMessage['payload'], ws: WebSocket) => {
@@ -117,7 +114,7 @@ wss.on('connection', (ws: WebSocket) => {
       const parsedMessage = JSON.parse(message) as WebSocketMessage;
 
       if (messageHandlers[parsedMessage.type]) {
-        await messageHandlers[parsedMessage.type](parsedMessage.payload, ws);
+        await messageHandlers[parsedMessage.type](parsedMessage.payload as any, ws);
       } else {
         ws.send(JSON.stringify({
           type: 'SYSTEM_MESSAGE',
@@ -153,19 +150,6 @@ wss.on('connection', (ws: WebSocket) => {
 // Express routes
 app.get('/', (req, res) => {
   res.send('Hello World!');
-});
-
-app.post('/', async (req, res) => {
-  const inputs = {
-    messages: [
-      {
-        role: "user",
-        content: "Comment marche le coivturage?"
-      }
-    ]
-  };
-  // TODO: Implement POST handler
-  res.json({status: 'received'});
 });
 
 // Start server
