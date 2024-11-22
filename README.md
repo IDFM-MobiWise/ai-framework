@@ -1,4 +1,4 @@
-# AI Toolkit pour l'amélioration de l'expérience voyageur IDFM
+# MobiWise AI Toolkit pour l'amélioration de l'expérience voyageur IDFM
 
 Ce projet est une boîte à outils basée sur LangGraph permettant de créer des flux d'intelligence artificielle complexes et réutilisables pour améliorer l'expérience des voyageurs d'Île-de-France Mobilités.
 
