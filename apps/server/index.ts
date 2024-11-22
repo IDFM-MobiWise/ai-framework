@@ -91,8 +91,6 @@ const messageHandlers = {
 
   TOOL_UPDATE: (payload: ToolUpdate['payload'], ws: WebSocket) => {
     console.log(`Tool update received from ${payload.toolName}:`, payload.data);
-
-    //do the update human in the loop
   },
 
   SYSTEM_MESSAGE: (payload: SystemMessage['payload'], ws: WebSocket) => {
